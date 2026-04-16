@@ -85,8 +85,6 @@ The repository now contains only the files relevant to the assembly-based versio
 ```text
 caalp-buffer-simulator/
 ├── README.md
-├── docs/
-│   └── report.md
 └── src/
     └── vuln.asm
 ```
@@ -102,15 +100,6 @@ It contains:
 - the vulnerable procedure
 - the crafted overflow logic
 - the redirected execution target
-
-#### `docs/report.md`
-Supporting project/report documentation.
-
-This can be used for:
-- project write-up
-- submission support
-- internal explanation
-- future expansion of documentation
 
 #### `README.md`
 The main project documentation for GitHub and presentation use.
