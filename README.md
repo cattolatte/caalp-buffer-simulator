@@ -2,126 +2,127 @@
 
 <p align="center">
   <b>Stack-Based Buffer Overflow Demonstration in Pure 8086 Assembly</b><br>
-  <i>Designed for Computer Architecture and Assembly Language Programming (20CS22002)</i>
+  <i>An educational low-level memory and control-flow simulation built for project-based academic study.</i>
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/8086-Assembly-blueviolet?style=for-the-badge" alt="8086 Assembly" />
-  <img src="https://img.shields.io/badge/CAALP-PBL-success?style=for-the-badge" alt="CAALP PBL" />
-  <img src="https://img.shields.io/badge/Academic-Educational-informational?style=for-the-badge" alt="Educational" />
+  <img src="https://img.shields.io/badge/8086-Assembly-6f42c1?style=for-the-badge" alt="8086 Assembly" />
+  <img src="https://img.shields.io/badge/Project-Academic-0a7ea4?style=for-the-badge" alt="Academic Project" />
+  <img src="https://img.shields.io/badge/Focus-Stack%20Internals-1f883d?style=for-the-badge" alt="Stack Internals" />
+  <img src="https://img.shields.io/badge/Domain-Computer%20Architecture-24292f?style=for-the-badge" alt="Computer Architecture" />
 </p>
 
 ---
 
 ## Overview
 
-This project is an academic simulation of a **stack-based buffer overflow** written in **pure 8086 assembly language**. It was developed as a **Project-Based Learning (PBL)** work for the subject:
+`CAALP Buffer Overflow Simulator` is a compact but detailed educational project that demonstrates how a **stack-based buffer overflow** can affect **program control flow** at the assembly level.
 
-**Computer Architecture and Assembly Language Programming (20CS22002)**  
-**II Year B.Tech – II Semester**  
-**Geethanjali College of Engineering and Technology**
+The entire core demonstration is written in **pure 8086 assembly**, allowing the behavior of the stack, procedure calls, return addresses, and memory overwrites to be observed in a direct and low-level form.
 
-The simulator demonstrates, in a controlled and syllabus-aligned way, how unsafe writing into a **local stack buffer** can corrupt nearby stack data such as the **saved base pointer** and the **return address**, eventually altering program control flow.
+The project focuses on a classic idea in systems programming:
 
-Unlike a high-level language demonstration, this project exposes the mechanism directly at the assembly level, making it highly suitable for explaining:
+- a procedure allocates a small local buffer on the stack
+- more data is written than the buffer can hold
+- nearby stack values are corrupted
+- the saved return address is overwritten
+- execution returns to an unintended target
 
-- stack frame organization
-- `CALL` and `RET` behavior
-- `BP` and `SP` usage
-- local variable allocation on stack
-- unsafe copying into memory
-- return address overwrite
-- control-flow hijacking in an educational environment
+This makes the project useful for understanding the relationship between:
 
----
-
-## Academic Purpose
-
-This project is designed around core low-level computing concepts commonly studied in computer architecture and assembly language programming.
-
-It connects strongly with topics such as:
-
-### Control Flow and Program Execution
-- procedure call and return behavior
-- program control transfer
+- stack memory layout
+- procedure call mechanics
+- register usage
+- addressing through `BP`/`SP`
+- unsafe memory writes
 - instruction flow redirection
 
-### 8086 and Register-Level Operation
-- 8086 architecture
-- register organization
+---
+
+## What This Project Demonstrates
+
+At a conceptual level, the simulator shows how a small mistake in stack-based memory handling can lead to major changes in execution behavior.
+
+### Core ideas covered
+- **8086 procedure call and return flow**
+- **stack frame construction**
+- **base pointer and stack pointer usage**
+- **local buffer allocation on the stack**
+- **overflow into adjacent control data**
+- **return-address overwrite**
+- **control-flow hijacking through `RET`**
+
+Instead of explaining the idea only theoretically, the project demonstrates it step by step in assembly code.
+
+---
+
+## Why the Assembly Version Matters
+
+A high-level language version can show the effect of an overflow, but assembly makes the mechanism much clearer.
+
+With this project, you can directly see:
+
+- where the buffer lives
+- where the saved `BP` is stored
+- where the return address is stored
+- which bytes overflow first
+- how `RET` uses the overwritten address
+
+Because everything happens close to the machine level, the project is particularly useful for students studying:
+
+- computer architecture
 - assembly language programming
-- use of `BP`, `SP`, `IP`, and segment-aware memory access
-
-### Memory and Stack Concepts
-- stack organization
-- local variable allocation on stack
-- addressing through stack-frame offsets
-- memory corruption through unsafe writes
-
-### Broader Learning Value
-The project helps students visualize how low-level memory and stack behavior affects execution of a program. It bridges theory and implementation by showing how a simple memory overwrite can redirect execution to a different procedure.
+- stack-based procedure handling
+- memory organization
+- low-level execution flow
 
 ---
 
-## Key Idea Demonstrated
+## Repository Structure
 
-The program creates a **4-byte local buffer on the stack** inside a procedure. It then copies **more than 4 bytes** into that buffer. Since the copy exceeds the allocated space, the additional bytes overwrite adjacent stack contents.
-
-This overflow affects:
-
-1. the local buffer
-2. the saved `BP`
-3. the stored return address
-
-When the procedure executes `RET`, the CPU pops the now-overwritten return address and transfers control to a different function, demonstrating execution flow hijacking.
-
----
-
-## Features
-
-- Written entirely in **8086 assembly**
-- Uses standard **DOS interrupt services**
-- Demonstrates **stack frame creation**
-- Shows a realistic **local stack buffer overflow style**
-- Overwrites the **saved return address**
-- Redirects execution to a hidden function
-- Designed specifically for **academic explanation and viva presentation**
-- Clean and well-commented for student understanding
-
----
-
-## Project Structure
+The repository now contains only the files relevant to the assembly-based version of the project.
 
 ```text
 caalp-buffer-simulator/
-├── src/
-│   └── vuln.asm         # Main 8086 assembly demonstration
+├── README.md
 ├── docs/
-│   └── report.md        # Supporting report/documentation
-├── Makefile             # Build/run helper commands
-├── simulator            # Built output (if assembled)
-└── README.md            # Project documentation
+│   └── report.md
+└── src/
+    └── vuln.asm
 ```
+
+### File descriptions
+
+#### `src/vuln.asm`
+The main 8086 assembly source file.
+
+It contains:
+- the data segment
+- the main execution path
+- the vulnerable procedure
+- the crafted overflow logic
+- the redirected execution target
+
+#### `docs/report.md`
+Supporting project/report documentation.
+
+This can be used for:
+- project write-up
+- submission support
+- internal explanation
+- future expansion of documentation
+
+#### `README.md`
+The main project documentation for GitHub and presentation use.
 
 ---
 
-## How the Demonstration Works
+## Technical Model of the Demonstration
 
-## 1. Normal Procedure Call
+The program simulates a stack-based overflow using a small local stack buffer inside a procedure.
 
-The main program calls a vulnerable procedure:
-
-```asm
-CALL VULNERABLE_PROC
-```
-
-When this executes, the CPU automatically pushes the **return address** onto the stack.
-
----
-
-## 2. Stack Frame Setup
-
-Inside the vulnerable procedure:
+### Procedure prologue
+Inside the vulnerable procedure, the stack frame is set up using:
 
 ```asm
 PUSH BP
@@ -129,16 +130,14 @@ MOV  BP, SP
 SUB  SP, 4
 ```
 
-This does three things:
+This creates a local buffer of **4 bytes** on the stack.
 
-- saves the old base pointer
-- establishes a new stack frame
-- allocates **4 bytes** of local buffer space
+### Stack layout
 
-So the stack frame becomes:
+After the procedure prologue, the stack frame can be understood as:
 
 ```text
-[BP+2] -> return address
+[BP+2] -> stored return address
 [BP+0] -> saved BP
 [BP-1] -> local buffer byte 4
 [BP-2] -> local buffer byte 3
@@ -146,167 +145,187 @@ So the stack frame becomes:
 [BP-4] -> local buffer byte 1
 ```
 
----
+### Overflow behavior
 
-## 3. Unsafe Copy
+The copy logic writes more than 4 bytes into this local buffer.
 
-The procedure copies more data than the local buffer can hold.
+That means:
+- the first bytes fill the buffer correctly
+- the next bytes overwrite saved `BP`
+- the final bytes overwrite the return address
 
-- First 4 bytes fill the buffer
-- Next 2 bytes overwrite saved `BP`
-- Final 2 bytes overwrite the return address
-
-This simulates the classic effect of a **stack-based overflow**.
-
----
-
-## 4. Control Flow Hijack
-
-After the overwrite, the procedure finishes with:
-
-```asm
-MOV SP, BP
-POP BP
-RET
-```
-
-At `RET`, the CPU pops the overwritten return address into `IP`, and control jumps to the hidden function instead of returning normally.
+When the procedure ends and `RET` executes, the overwritten return address is popped into the instruction pointer, causing control to jump to another procedure.
 
 ---
 
-## Current Assembly File
+## Execution Flow Summary
 
-The main implementation is in:
+The overall demonstration follows this sequence:
 
-```text
-src/vuln.asm
-```
-
-It contains:
-
-- data section with messages and payload bytes
-- main procedure
-- vulnerable procedure
-- secret/hijacked function
-
----
-
-## Why This Version Is Academically Better
-
-This project originally used a direct manual overwrite of the return address. That was useful, but less realistic.
-
-The updated version is better because it demonstrates:
-
-- an actual **local stack buffer**
-- a **copy beyond buffer bounds**
-- memory corruption of adjacent stack values
-- return-address corruption as a consequence of overflow
-
-This makes the example more suitable for:
-
-- project demonstrations
-- report writing
-- viva explanations
-- syllabus-based justification
+1. The main program initializes the data segment.
+2. It calls the vulnerable procedure.
+3. The vulnerable procedure builds a stack frame.
+4. A local buffer is allocated on the stack.
+5. More bytes are copied than the buffer can safely hold.
+6. The saved frame data and return address are corrupted.
+7. The procedure restores state and executes `RET`.
+8. `RET` transfers execution to the overwritten target instead of the normal caller continuation.
+9. The hijacked function prints the success message and exits.
 
 ---
 
-## Learning Outcomes
+## Conceptual Areas Reflected in the Project
 
-By studying this project, a student can understand:
+This project naturally connects with several important low-level programming and architecture concepts.
 
-- how stack frames are formed in 8086 assembly
-- how `CALL` stores a return address
-- how `RET` resumes execution using stack contents
-- how local variables may be placed on the stack
-- how unsafe writes can corrupt surrounding memory
-- how control flow can be redirected by return-address overwrite
-- why memory safety matters in low-level programming
+### Procedure and control-flow behavior
+- `CALL`
+- `RET`
+- return-address storage
+- control transfer
 
----
+### Register-level reasoning
+- `BP`
+- `SP`
+- `AX`
+- `SI`
+- `DI`
+- segment-aware memory use
 
-## Conceptual Alignment
+### Addressing and memory access
+- stack-relative addressing
+- `[BP-4]`
+- `[BP+2]`
+- offset-based access within a frame
 
-This project is closely aligned with foundational topics in computer architecture and assembly language programming.
+### Memory organization
+- local stack variables
+- adjacent memory corruption
+- structured frame layout
 
-It demonstrates:
-- procedure handling
-- stack layout
-- register usage
-- memory addressing
-- assembly-level control transfer
-
-### Core Concepts Reflected in the Project
-- 8086 register organization
-- addressing modes
-- program control
-- call and return instructions
-- stack pointer and base pointer usage
-- assembly language programming
-
----
-
-## Build and Execution
-
-This project may be assembled and tested using an **8086-compatible assembler/emulator** such as:
-
-- EMU8086
-- DOSBox with MASM/TASM
-- similar 16-bit x86 educational tools
-
-### Typical workflow
-1. Open `src/vuln.asm`
-2. Assemble the source
-3. Run the generated executable in DOS environment/emulator
-4. Observe the hijacked execution path
+### Assembly programming practice
+- segmented program structure
+- DOS interrupt usage
+- low-level procedural design
+- explicit data movement and control
 
 ---
 
 ## Expected Output
 
-When the overflow succeeds, the program should print the hijacked execution message:
+In the current educational setup, the overflow is intentional, so the hijacked path is the expected result.
 
+### Hijacked execution path
 ```text
 Return Address Overwritten - Control Hijacked.
 ```
 
-If the return path were not corrupted, the normal message would be:
+### Normal execution path
+If the return address were not corrupted, the program would continue normally and display:
 
 ```text
 Normal Execution Path Reached.
 ```
 
-In the current educational setup, the overflow is intentional, so the hijacked path is expected.
+---
+
+## How to Study This Project Effectively
+
+A good way to understand the simulator is to read it in the following order:
+
+### 1. Start at `START`
+See how the data segment is initialized and how the vulnerable procedure is called.
+
+### 2. Move to `VULNERABLE_PROC`
+Observe:
+- stack frame setup
+- local buffer creation
+- pointer initialization
+- copy logic
+
+### 3. Track the stack layout
+Pay attention to:
+- `BP`
+- `SP`
+- the meaning of `[BP-4]`, `[BP+0]`, and `[BP+2]`
+
+### 4. Follow the overflow
+Notice how writing more bytes than allocated causes the overwrite to move upward into stack control data.
+
+### 5. Observe `RET`
+Understand that `RET` does not “know” the address is corrupted; it simply trusts the stack and transfers control there.
 
 ---
 
-## Suggested Viva Explanation
+## Educational Value
 
-A concise explanation for presentation:
+This project is useful because it turns a commonly discussed vulnerability into a visible low-level execution model.
 
-> This project demonstrates a stack-based buffer overflow in 8086 assembly. Inside a vulnerable procedure, a 4-byte local buffer is created on the stack using `SUB SP, 4`. More than 4 bytes are then copied into that buffer, which overwrites the saved base pointer and the return address stored by `CALL`. When `RET` executes, the overwritten return address is loaded into the instruction pointer, causing execution to jump to a different function. This shows how unsafe memory writes on the stack can change program control flow.
+### It helps explain:
+- why stack discipline matters
+- how return addresses are stored and used
+- why unsafe writes are dangerous
+- how memory corruption can alter execution
+- how architecture concepts connect to real program behavior
+
+### It is especially valuable for:
+- project demonstrations
+- viva explanations
+- low-level systems discussions
+- understanding assembly procedure design
+- relating theory to execution flow
 
 ---
 
-## Professional Notes
+## Suggested Viva / Presentation Explanation
 
-- This is an **educational simulation**, not a real-world attack tool.
-- The objective is to explain **computer architecture and assembly behavior**, not offensive exploitation.
-- The implementation is intentionally simplified so the stack effect can be observed clearly in an academic setting.
+A concise professional explanation:
+
+> This project demonstrates a stack-based buffer overflow in pure 8086 assembly. A vulnerable procedure allocates a 4-byte local buffer on the stack and then copies more than 4 bytes into it. Because the write exceeds the allocated space, the overflow corrupts the saved base pointer and the stored return address. When the procedure executes `RET`, the CPU loads the overwritten return address into the instruction pointer, causing execution to jump to a different function. This demonstrates how unsafe stack memory writes can alter program control flow.
+
+---
+
+## Notes on Design
+
+This project is intentionally designed to be:
+
+- **compact** enough to study easily
+- **explicit** enough to trace manually
+- **low-level** enough to show actual stack mechanics
+- **structured** enough for academic presentation
+
+The code is simplified intentionally so the central ideas remain clear and observable.
+
+---
+
+## Tools for Running the Code
+
+The assembly source can be assembled and tested using 8086-oriented educational tools such as:
+
+- **EMU8086**
+- **DOSBox + MASM/TASM**
+- other compatible 16-bit x86 emulators or assemblers
+
+A typical process is:
+
+1. open `src/vuln.asm`
+2. assemble the file
+3. run the executable in the emulator
+4. observe the redirected output path
 
 ---
 
 ## Disclaimer
 
-This project is created **strictly for academic and educational purposes** as part of CAALP PBL work.
+This repository is intended **strictly for academic and educational use**.
 
-It should only be used:
-- for subject demonstration
-- for understanding stack behavior
-- for learning secure programming concepts
-- in controlled lab or classroom environments
+Its purpose is to:
+- explain low-level memory behavior
+- study stack-based procedure execution
+- illustrate the consequences of unsafe writes
+- support learning in controlled environments
 
-It must not be used against any real system, software, or environment without explicit authorization.
+It is not intended as an offensive security tool, and it should not be used against real systems or software without explicit authorization.
 
 ---
 
@@ -326,6 +345,6 @@ Department of Computer Science and Engineering
 
 ---
 
-## Final Note
+## Closing Note
 
-This project is a compact but powerful demonstration of how assembly language, stack organization, and procedure control interact at the hardware-near level. For CAALP, it serves as a strong example of applying 8086 concepts in a practical and memorable way.
+This project is a focused demonstration of how assembly language, stack organization, and procedure control interact at the machine-near level. By reducing the example to a clean 8086 implementation, it becomes easier to understand not just that a buffer overflow can happen, but exactly **how** it affects execution internally.
