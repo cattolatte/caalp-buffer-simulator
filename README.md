@@ -37,22 +37,26 @@ Unlike a high-level language demonstration, this project exposes the mechanism d
 
 ## Academic Purpose
 
-This project is intentionally built to be **CAALP syllabus-friendly**.
+This project is designed around core low-level computing concepts commonly studied in computer architecture and assembly language programming.
 
-It connects strongly with the topics listed in the course syllabus, especially:
+It connects strongly with topics such as:
 
-### Unit II
-- Program control
-- Instruction formats
-- Addressing modes
-- Stack organization concepts
+### Control Flow and Program Execution
+- procedure call and return behavior
+- program control transfer
+- instruction flow redirection
 
-### Unit III
+### 8086 and Register-Level Operation
 - 8086 architecture
-- Register organization
-- Assembly language programming
-- Branch and call instructions
-- Use of `BP`, `SP`, `IP`, and segment registers
+- register organization
+- assembly language programming
+- use of `BP`, `SP`, `IP`, and segment-aware memory access
+
+### Memory and Stack Concepts
+- stack organization
+- local variable allocation on stack
+- addressing through stack-frame offsets
+- memory corruption through unsafe writes
 
 ### Broader Learning Value
 The project helps students visualize how low-level memory and stack behavior affects execution of a program. It bridges theory and implementation by showing how a simple memory overwrite can redirect execution to a different procedure.
@@ -221,21 +225,18 @@ By studying this project, a student can understand:
 
 ---
 
-## Syllabus Alignment
+## Conceptual Alignment
 
-This project is closely aligned with the CAALP course outcomes, especially:
+This project is closely aligned with foundational topics in computer architecture and assembly language programming.
 
-### CO3
-**Use 8086 microprocessor architecture and develop assembly language programs**
-
-This project demonstrates:
+It demonstrates:
 - procedure handling
 - stack layout
 - register usage
 - memory addressing
 - assembly-level control transfer
 
-### Relevant Concepts from Syllabus
+### Core Concepts Reflected in the Project
 - 8086 register organization
 - addressing modes
 - program control
