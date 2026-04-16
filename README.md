@@ -102,7 +102,7 @@ It contains:
 - the redirected execution target
 
 #### `README.md`
-The main project documentation for GitHub and presentation use.
+The main project documentation for the repository.
 
 ---
 
@@ -258,19 +258,9 @@ This project is useful because it turns a commonly discussed vulnerability into 
 - how architecture concepts connect to real program behavior
 
 ### It is especially valuable for:
-- project demonstrations
-- viva explanations
 - low-level systems discussions
 - understanding assembly procedure design
 - relating theory to execution flow
-
----
-
-## Suggested Viva / Presentation Explanation
-
-A concise professional explanation:
-
-> This project demonstrates a stack-based buffer overflow in pure 8086 assembly. A vulnerable procedure allocates a 4-byte local buffer on the stack and then copies more than 4 bytes into it. Because the write exceeds the allocated space, the overflow corrupts the saved base pointer and the stored return address. When the procedure executes `RET`, the CPU loads the overwritten return address into the instruction pointer, causing execution to jump to a different function. This demonstrates how unsafe stack memory writes can alter program control flow.
 
 ---
 
@@ -281,7 +271,7 @@ This project is intentionally designed to be:
 - **compact** enough to study easily
 - **explicit** enough to trace manually
 - **low-level** enough to show actual stack mechanics
-- **structured** enough for academic presentation
+- **structured** enough for clear technical documentation
 
 The code is simplified intentionally so the central ideas remain clear and observable.
 
